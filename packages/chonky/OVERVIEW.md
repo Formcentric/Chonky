@@ -1,7 +1,7 @@
 # Overview
 
 Chonky uses a smart system to manage redux states and actions as well as types. 
-Although this makes managing the code base of such an extensive library easy in the long run it can be overwhelming for programmers who are not familiar with the repository.
+Although this makes managing the code base of such an extensive library easy in the long run, it can be overwhelming for programmers who are not familiar with the repository.
 This md file aims at solving this issue by giving its reader a quick overview over the code base. This should make the implementation of new features a more straight-forward process that doesn't come with the prerequisite of hours spent analyzing the code base. 
 Information about setting up the development environment, lerna and tsdx can be found in the other md files.
 
@@ -18,7 +18,7 @@ Information about setting up the development environment, lerna and tsdx can be 
 
 To understand how chonky works we should first analyze what happens when chonky is initialized in another application.
 
-When the package is rendered in another app the user usually imports the FullFileBrowser which is exported from components/external.
+When the package is being rendered in another app the user usually imports the FullFileBrowser which is exported from components/external.
 This is what the return function looks like:
 
 ```tsx
@@ -148,7 +148,7 @@ ChonkyBusinessLogic then sets the correct settings...
 
 ### react-window
 
-Depending on what view mode is selected chonky generates list or grid views handled by react-window in its FileList:
+Depending on what view mode is selected, chonky generates list or grid views handled by react-window:
 
 ```tsx
 const listRenderer = useCallback(
@@ -202,7 +202,7 @@ return (
 
 ### Entries
 
-SmartFileEntries will either render a grid item or a list item. Those are handled separately in different components. To handle those components redux selectors and component specific hooks are being used.
+SmartFileEntries will either render a grid item or a list item. Those are handled separately in different components. To handle those components redux selectors and component-specific hooks are being used.
 This is a ListEntry:
 
 ```tsx
@@ -260,8 +260,8 @@ return (
 
 ### Action-Definitions
 
-Chonky uses a smart system to manage actions. This means actions can be defined that dispatch certain redux state changes, while their call is being registered by chonky's action handler. Since the action handler can be a callback function passed into the component, those actions can be registered through their id at the top level of the application running chonky.
-Called actions can also pass their payload to the action handler. Which means information about the file the action was performed becomes available the top level.
+Chonky uses a smart system to manage actions. This means it's possible to define actions that dispatch certain redux state changes, while their call is being registered by chonky's action handler. Since the action handler can be a callback function passed into the component, the performance of an action can be registered at the top level of the application running chonky.
+Called actions can also pass their payload to the action handler. Which means information about the file the action was performed on becomes available at the top level.
 
 ```ts
 const DefaultActions = {
@@ -311,7 +311,7 @@ const DefaultActions = {
 ```
 
 The entries of an action depend on its use case. For example, the button key defines whether the action should be performed by clicking a button. The button key should then define where the button is located, its name etc.
-Chonky will add an action that's called by a button to the toolbar or context automatically.
+Chonky will add an action that's being called by a button to the toolbar or context automatically.
 
 #### default.ts
 
@@ -319,7 +319,7 @@ This file contains actions that are enabled by default
 
 #### essentials.ts
 
-This file contains actions that are essential to how chonky functions and therefore can't be disabled. Those actions are usually called by hooks or other actions through the thunkRequestFileAction function located in redux/thunks/dispatchers.thunks.tsx
+This file contains actions that are essential to how chonky functions. Therefore, they can not be disabled. Those actions are usually called by hooks or other actions through the thunkRequestFileAction function located in redux/thunks/dispatchers.thunks.tsx .
 
 ```ts
 const EssentialActions = {
@@ -371,7 +371,7 @@ const EssentialActions = {
 }
 ```
 
-In the snippet shown above we can see that redux selectors and dispatchers are being used to change the state of the context menu. As this action is called internally through a hook used in component there's no button entry for the action.
+In the snippet shown above we can see that redux selectors and dispatchers are being used to change the state of the context menu. As this action is called internally through a hook used in components, there's no button entry for the action.
 
 ### Redux
 

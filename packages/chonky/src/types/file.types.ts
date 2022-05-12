@@ -19,6 +19,7 @@ export interface FileData {
     dndOpenable?: boolean; // Can be opened by DnD hover, default: true for folders
 
     size?: number; // File size in bytes
+    hideSize?: boolean // Display size or -
     modDate?: Date | string; // Last change date (or its string representation)
     childrenCount?: number; // Number of files inside of a folder (only for folders)
 
