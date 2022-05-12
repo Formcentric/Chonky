@@ -15,7 +15,7 @@ import {DeepPartial} from "tsdef";
 
 const App = () => {
     const testFiles: FileArray = [
-        {id: 'wedewomdoiedmed', name: 'Folder1', isDir: true, size: 0, hideSize: true, descr: 'Hier steht eine Beschreibung', childrenCount: 10},
+        {id: 'wedewomdoiedmed', name: 'Folder1', isDir: true, size: 0, descr: 'Hier steht eine Beschreibung', childrenCount: 10},
         {id: 'wedewomdoiedeedeweddmed', name: 'Datei2.jpg', isDir: false, type: 'MEDIA', ext: '.jpg', color: '#473E7D'},
         {id: 'tesxhbcdovjewfefrgewfgfe', name: 'Datei4.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
         {id: 'tesxhbcewfewfewfdovjwfefefe', name: 'Datei5.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},

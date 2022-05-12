@@ -71,7 +71,7 @@ export const useLocalizedFileEntryStrings = (file: Nullable<FileData>) => {
     return useMemo(() => {
         return {
             fileModDateString: formatters.formatFileModDate(intl, file),
-            fileSizeString: !file?.hideSize ? formatters.formatFileSize(intl, file) : null,
+            fileSizeString: formatters.formatFileSize(intl, file),
         };
     }, [file, formatters, intl]);
 };
