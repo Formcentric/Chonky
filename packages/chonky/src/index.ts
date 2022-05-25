@@ -12,6 +12,7 @@ export { ChonkyActions, DefaultFileActions, OptionIds } from './action-definitio
 export { defineFileAction } from './util/helpers';
 
 export { FileHelper } from './util/file-helper';
+export { useIconData, ColorsLight, ColorsDark } from './util/icon-helper'
 export { FileData, FileArray } from './types/file.types';
 export { FileAction, FileActionEffect, FileSelectionTransform, FileActionButton, CustomVisibilityState } from './types/action.types';
 export {
