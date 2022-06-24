@@ -4,6 +4,7 @@ import { Nullable } from 'tsdef';
 
 import { ChonkyActions } from '../action-definitions/index';
 import {
+    selectContextMenuTriggerFile,
     selectFileActionData,
     selectFileViewConfig,
     selectOptionValue,
@@ -33,6 +34,7 @@ export const useFileActionProps = (
 ): { icon: Nullable<ChonkyIconName | string>; active: boolean; disabled: boolean } => {
     const parentFolder = useSelector(selectParentFolder);
     const fileViewConfig = useSelector(selectFileViewConfig);
+    const contextTriggerFile = useSelector(selectContextMenuTriggerFile)
 
     const sortActionId = useSelector(selectSortActionId);
     const sortOrder = useSelector(selectSortOrder);
@@ -79,6 +81,10 @@ export const useFileActionProps = (
         if (action.customVisibility !== undefined) {
             customDisabled = action.customVisibility() === CustomVisibilityState.Disabled;
             customActive = action.customVisibility() === CustomVisibilityState.Active;
+        }
+        if (action.customVisibilityContext !== undefined && contextTriggerFile) {
+            customDisabled = action.customVisibilityContext(contextTriggerFile) === CustomVisibilityState.Disabled
+            customActive = action.customVisibilityContext(contextTriggerFile) === CustomVisibilityState.Active
         }
         const active =
             isSortButtonAndCurrentSort ||

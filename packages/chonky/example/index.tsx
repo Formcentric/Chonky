@@ -1,17 +1,20 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
+import {useCallback} from 'react';
 import * as ReactDOM from 'react-dom';
 import {
     ChonkyActions,
-    ChonkyActionUnion, ChonkyIconName,
-    defineFileAction, FileAction,
+    ChonkyActionUnion,
+    ChonkyIconName,
+    defineFileAction,
+    FileAction,
     FileArray,
     FullFileBrowser,
-    GenericFileActionHandler, setChonkyDefaults
+    GenericFileActionHandler,
+    setChonkyDefaults
 } from '../.';
-import {useCallback} from "react";
 import {ChonkyTheme} from "../src/util/styles";
-import {DeepPartial} from "tsdef";
+import {DeepPartial, Nullable} from "tsdef";
 
 const App = () => {
     const testFiles: FileArray = [
@@ -41,6 +44,20 @@ const App = () => {
                 icon: ChonkyIconName.trash,
             },
         }),
+        ShowReferences: defineFileAction({
+            id: 'showReferences',
+            hotkeys: ['ctrl+r'],
+            button: {
+                name: 'Display uses',
+                toolbar: false,
+                contextMenu: true,
+                icon: 'ChonkyCustomIconReferences',
+            },
+            customVisibilityContext: (file) => {
+                if (file?.isDir === true) return 0
+                return 2
+            },
+        } as const),
     }
 
     const customActionTrash = defineFileAction({
@@ -48,13 +65,19 @@ const App = () => {
         __payloadType: {} as { three: string },
     })
 
+    const customActionReferences = defineFileAction({
+        id: 'trashFiles',
+        __payloadType: {} as { three: string },
+    })
+
     // Define custom types
-    type CustomActionUnion = typeof customActionTrash
+    type CustomActionUnion = typeof CustomActions.TrashFiles | typeof CustomActions.ShowReferences
     type CustomHandler = GenericFileActionHandler<ChonkyActionUnion | CustomActionUnion>
 
     // available context actions in library
     const fileActionsLibrary: FileAction[] = [
         CustomActions.TrashFiles,
+        CustomActions.ShowReferences
     ]
 
     // handles file browser actions
@@ -65,6 +88,10 @@ const App = () => {
             // handle action type
             switch (data.id) {
                 case CustomActions.TrashFiles.id:
+                    console.log(CustomActions.TrashFiles.id)
+                    break
+                case CustomActions.ShowReferences.id:
+                    console.log(CustomActions.ShowReferences.id)
                     break
                 default:
             }
@@ -73,8 +100,9 @@ const App = () => {
     )
 
     const disableActions = [
-        // ChonkyActions.SelectAllFiles.id,
-        // ChonkyActions.OpenSelection.id,
+        ChonkyActions.SelectAllFiles.id,
+        ChonkyActions.OpenSelection.id,
+        ChonkyActions.ClearSelection.id
     ]
 
     const theme: DeepPartial<ChonkyTheme> = {

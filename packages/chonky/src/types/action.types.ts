@@ -2,7 +2,7 @@ import { MaybePromise, Nullable } from 'tsdef';
 
 import { FileActionState } from './action-handler.types';
 import { FileViewConfig } from './file-view.types';
-import { FileFilter, FileMap } from './file.types';
+import { FileData, FileFilter, FileMap } from './file.types';
 import { ChonkyIconName } from './icons.types';
 import { ChonkyDispatch, RootState } from './redux.types';
 import { FileSortKeySelector } from './sort.types';
@@ -71,12 +71,21 @@ export interface FileAction {
     /**
      * When customVisibility is defined, it will change the display state of the file action
      * The function must return the visibility as one of the CustomVisibilityState values:
-     *  - Hidden
-     *  - Disabled
-     *  - Default
-     *  - Active
+     *  - Hidden = 0
+     *  - Disabled = 1
+     *  - Default = 2
+     *  - Active = 3
      */
     customVisibility?: () => CustomVisibilityState;
+    /**
+     * When customVisibilityContext is defined, it will change the display state of the file action in the context menu only
+     * The function must return the visibility as one of the CustomVisibilityState values:
+     *  - Hidden = 0
+     *  - Disabled = 1
+     *  - Default = 2
+     *  - Active = 3
+     */
+    customVisibilityContext?: (file: Nullable<FileData>) => CustomVisibilityState
     /**
      * Field used to infer the type of action payload. It is used solely for Typescript
      * type inference and action validation.

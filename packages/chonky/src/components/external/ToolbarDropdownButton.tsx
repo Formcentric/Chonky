@@ -10,7 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import React, { useCallback, useContext } from 'react';
 import { Nullable } from 'tsdef';
 
-import { selectFileActionData } from '../../redux/selectors';
+import { selectContextMenuTriggerFile, selectFileActionData } from '../../redux/selectors';
 import { useParamSelector } from '../../redux/store';
 import { ChonkyIconName } from '../../types/icons.types';
 import { CustomVisibilityState } from '../../types/action.types';
@@ -18,6 +18,7 @@ import { useFileActionProps, useFileActionTrigger } from '../../util/file-action
 import { useLocalizedFileActionStrings } from '../../util/i18n';
 import { ChonkyIconContext } from '../../util/icon-helper';
 import { c, important, makeGlobalChonkyStyles } from '../../util/styles';
+import { useSelector } from "react-redux";
 
 export interface ToolbarDropdownButtonProps {
     text: string;
@@ -88,6 +89,7 @@ export const SmartToolbarDropdownButton = React.forwardRef(
     (props: SmartToolbarDropdownButtonProps, ref: React.Ref<HTMLLIElement>) => {
         const { fileActionId, onClickFollowUp } = props;
 
+        const contextTriggerFile = useSelector(selectContextMenuTriggerFile)
         const action = useParamSelector(selectFileActionData, fileActionId);
         const triggerAction = useFileActionTrigger(fileActionId);
         const { icon, active, disabled } = useFileActionProps(fileActionId);
@@ -103,6 +105,7 @@ export const SmartToolbarDropdownButton = React.forwardRef(
         const { button } = action;
         if (!button) return null;
         if (action.customVisibility !== undefined && action.customVisibility() === CustomVisibilityState.Hidden) return null;
+        if (action.customVisibilityContext !== undefined && contextTriggerFile && action.customVisibilityContext(contextTriggerFile) === CustomVisibilityState.Hidden) return null
 
         return (
             <ToolbarDropdownButton
