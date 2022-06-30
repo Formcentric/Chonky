@@ -69,7 +69,7 @@ export type RootState = {
     disableDragAndDrop: boolean;
     clearSelectionOnOutsideClick: boolean;
     openFilesOnSingleClick: boolean;
-    displayCustomFileData: boolean | string[];
+    displayCustomFileData: Nullable<{ key: string, width?: number}[]>;
 
 
     // State to use inside effects

@@ -123,10 +123,10 @@ export const useCustomFileDataKeys = (file: Nullable<FileData>) => {
         if (!file) return null
 
         const customKeys = useSelector(selectors.getDisplayCustomFileData)
-        let fileData
-        if (typeof customKeys !== 'boolean') {
-            fileData = customKeys.map(key => ({key, data: file[key]}))
-        }
+        if (customKeys === null) return null
+        let fileData = customKeys.map(({key, width}) => {
+            return { key, data: file[key], width }
+        })
 
         return fileData
 }

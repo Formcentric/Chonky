@@ -1,6 +1,6 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
-import {useCallback} from 'react';
+import { useCallback } from 'react';
 import * as ReactDOM from 'react-dom';
 import {
     ChonkyActions,
@@ -13,12 +13,12 @@ import {
     GenericFileActionHandler,
     setChonkyDefaults
 } from '../.';
-import {ChonkyTheme} from "../src/util/styles";
-import {DeepPartial, Nullable} from "tsdef";
+import { ChonkyTheme } from "../src/util/styles";
+import { DeepPartial } from "tsdef";
 
 const App = () => {
     const testFiles: FileArray = [
-        {id: 'wedewomdoiedmed', name: 'Folder1', isDir: true, size: 0, descr: 'Hier steht eine Beschreibung', childrenCount: 10},
+        {id: 'wedewomdoiedmed', name: 'Folder1efwoijofjofjewojefwojfewojefwojewodeojoejeojewjejojewdej', isDir: true, size: 0, descr: 'Hier steht eine Beschreibungfwekojefwoijfeojefwo', childrenCount: 10},
         {id: 'wedewomdoiedeedeweddmed', name: 'Datei2.jpg', isDir: false, type: 'MEDIA', ext: '.jpg', color: '#473E7D'},
         {id: 'tesxhbcdovjewfefrgewfgfe', name: 'Datei4.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
         {id: 'tesxhbcewfewfewfdovjwfefefe', name: 'Datei5.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
@@ -142,7 +142,7 @@ const App = () => {
         openFilesOnSingleClick: true,
         listViewProps: {itemSize: 70, space: 12},
         defaultFileViewActionId: ChonkyActions.EnableListView.id,
-        displayCustomFileData: ['descr', 'type'],
+        displayCustomFileData: [{key: 'descr', width: 800}, {key: 'type'}],
     }
 
     setChonkyDefaults(config)

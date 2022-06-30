@@ -41,7 +41,7 @@ export const defaultConfig: ChonkyConfig = {
     darkMode: false,
     listViewProps: null,
     i18n: {},
-    displayCustomFileData: false,
+    displayCustomFileData: null,
 };
 
 export const setChonkyDefaults = (config: Partial<ChonkyConfig>) => {

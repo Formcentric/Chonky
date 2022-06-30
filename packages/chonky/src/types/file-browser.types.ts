@@ -1,5 +1,5 @@
-import {ElementType, ReactElement, UIEvent} from 'react';
-import {DeepPartial, Nullable} from 'tsdef';
+import { ElementType, ReactElement, UIEvent } from 'react';
+import { DeepPartial, Nullable } from 'tsdef';
 
 import { ChonkyActions } from '../action-definitions/index';
 import { GenericFileActionHandler } from './action-handler.types';
@@ -192,5 +192,5 @@ export interface FileBrowserProps {
     /**
      * Define file data keys that should be displayed in ListView
      */
-    displayCustomFileData?: boolean | string[]
+    displayCustomFileData?: Nullable<{key: string, width?: number }[]>
 }

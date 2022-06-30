@@ -65,9 +65,16 @@ export const ListEntry: React.FC<FileEntryProps> = React.memo(
                 >
                     <FileEntryName file={file} />
                 </div>
-                {customFileData && customFileData.map(data => <div key={data.key} className={classes.listFileEntryProperty}>
-                    {data.data ? <span>{data.data}</span> : <span>—</span>}
-                </div>)}
+                {customFileData && customFileData.map(data => (
+                    <div
+                        key={data.key}
+                        className={classes.listFileEntryProperty}
+                        style={data?.width ? {flex: `0 1 ${data.width}px`} : {}}
+                        title={data?.width && data.data ? data.data : undefined}
+                    >
+                        {data.data ? <span>{data.data}</span> : <span>—</span>}
+                    </div>
+                ))}
                 <div className={c([classes.listFileEntryProperty, 'chonky-listFileEntryProperty'])}>
                     {file ? (
                         fileModDateString ?? <span>—</span>
