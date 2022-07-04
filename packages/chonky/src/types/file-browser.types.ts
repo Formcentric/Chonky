@@ -1,5 +1,5 @@
 import { ElementType, ReactElement, UIEvent } from 'react';
-import { DeepPartial, Nullable } from 'tsdef';
+import { Nullable } from 'tsdef';
 
 import { ChonkyActions } from '../action-definitions/index';
 import { GenericFileActionHandler } from './action-handler.types';
@@ -9,7 +9,7 @@ import { I18nConfig } from './i18n.types';
 import { ChonkyIconProps } from './icons.types';
 import { ThumbnailGenerator } from './thumbnails.types';
 import { FileListProps } from "./file-list.types";
-import {ChonkyTheme} from "../util/styles";
+import { ChonkyThemeOverride } from "../util/styles";
 
 /**
  * File browser methods exposed to developers via the `FileBrowser` ref.
@@ -161,10 +161,9 @@ export interface FileBrowserProps {
     darkMode?: boolean;
 
     /**
-     * Override theme. If you wish to customize selection- & focusIndicator
-     * or grid folder use this option.
+     * Override theme
      */
-    themeOverride?: DeepPartial<ChonkyTheme>
+    themeOverride?: ChonkyThemeOverride
 
     /**
      * Override file list props

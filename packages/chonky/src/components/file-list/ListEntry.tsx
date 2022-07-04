@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 
 import { DndEntryState, FileEntryProps } from '../../types/file-list.types';
 import { useLocalizedFileEntryStrings } from '../../util/i18n';
@@ -14,6 +14,8 @@ import {
 } from './FileEntry-hooks';
 import { FileEntryName } from './FileEntryName';
 import { FileEntryState, useCommonEntryStyles } from './GridEntryPreview';
+import {Tooltip} from "@material-ui/core";
+import FileEntryTooltip from "./FileEntryTooltip";
 
 interface StyleState {
     entryState: FileEntryState;
@@ -42,6 +44,7 @@ export const ListEntry: React.FC<FileEntryProps> = React.memo(
         const customFileData = useCustomFileDataKeys(file)
         const contextMenuActionButton = useContextMenuActionButton(c([classes.listFileEntryProperty, 'chonky-listFileEntryProperty']))
 
+
         return (
             <div className={c([classes.listFileEntry, 'chonky-listFileEntry'])} {...fileEntryHtmlProps}>
                 <div className={c([commonClasses.focusIndicator, 'chonky-listFileEntryFocusIndicator'])}></div>
@@ -59,21 +62,19 @@ export const ListEntry: React.FC<FileEntryProps> = React.memo(
                         fixedWidth={true}
                     />
                 </div>
-                <div
-                    className={c([classes.listFileEntryName, 'chonky-listFileEntryName'])}
-                    title={file ? file.name : undefined}
-                >
-                    <FileEntryName file={file} />
-                </div>
-                {customFileData && customFileData.map(data => (
-                    <div
-                        key={data.key}
+                <FileEntryTooltip className={c([classes.listFileEntryName, 'chonky-listFileEntryName'])} tooltipTitle={file?.name ?? ''}>
+                    <span>
+                        <FileEntryName file={file} />
+                    </span>
+                </FileEntryTooltip>
+                {customFileData && customFileData.map((data) => (
+                    <FileEntryTooltip
                         className={classes.listFileEntryProperty}
+                        tooltipTitle={data.data}
                         style={data?.width ? {flex: `0 1 ${data.width}px`} : {}}
-                        title={data?.width && data.data ? data.data : undefined}
                     >
                         {data.data ? <span>{data.data}</span> : <span>—</span>}
-                    </div>
+                    </FileEntryTooltip>
                 ))}
                 <div className={c([classes.listFileEntryProperty, 'chonky-listFileEntryProperty'])}>
                     {file ? (

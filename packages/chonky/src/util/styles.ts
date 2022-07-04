@@ -103,10 +103,20 @@ export const lightTheme = {
         height: '100%',
         width: '100%',
         zIndex: 11,
-    }
+    },
+
+    // Material Components
+    props: {
+        MuiTooltip: {
+            placement: 'bottom-start',
+            arrow: true,
+        }
+    },
+    overrides: {}
 };
 
 export type ChonkyTheme = typeof lightTheme;
+export type ChonkyThemeOverride = DeepPartial<ChonkyTheme> & Record<string, any>
 
 export const darkThemeOverride: DeepPartial<ChonkyTheme> = {
     gridFileEntry: {

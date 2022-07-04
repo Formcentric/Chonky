@@ -1,11 +1,12 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
-import { useCallback } from 'react';
+import {useCallback, useState} from 'react';
 import * as ReactDOM from 'react-dom';
 import {
     ChonkyActions,
     ChonkyActionUnion,
     ChonkyIconName,
+    ChonkyThemeOverride,
     defineFileAction,
     FileAction,
     FileArray,
@@ -13,8 +14,6 @@ import {
     GenericFileActionHandler,
     setChonkyDefaults
 } from '../.';
-import { ChonkyTheme } from "../src/util/styles";
-import { DeepPartial } from "tsdef";
 
 const App = () => {
     const testFiles: FileArray = [
@@ -26,12 +25,28 @@ const App = () => {
         {id: 'tesxhbcdovjefwefefwefefefefefwfewx', name: 'Datei7.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
         {id: 'tesxhbcdovjiomocmoicmdsiomcidmdismi', name: 'Datei8.to.send.wmv', isDir: false, type: 'MEDIA', ext: '.wmv', hideExt: true},
         {id: 'tesxhbcdovjcdsodsm,ocmdocmdomcodmcoc', name: 'Datei9.jpg.png', isDir: false, type: 'MEDIA'},
-        {id: 'tesxhbcdovjdlc,ocd,oc,odc,docodmcodmc', name: 'Datei10.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {id: 'tesxhbcdovjdlc,ocd,oc,odc,docodmcodmc', name: 'Datei10.jpg', isDir: false, descr: 'Hier steht eine Beschreibungfwekojefwoijfeojefwo', type: 'MEDIA', ext: '.jpg'},
         {id: 'tesxhbcdovjdps,odcodmcomddsoosddocmckk', name: 'Datei11.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
         {id: 'tesxhbcdovjdps,odcodmcomddsoosdddwqdocmckk', name: 'Datei12.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
         {id: 'tesxhbcdovjdps,odcodmcomddsoosdwdqdwdocmckk', name: 'Datei13.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
         {id: 'tesxhbcdovjdps,odcodmcomddsoosddddddocmckk', name: 'Datei14dqwiuhdwuhquwdhqwdquwuddwubhwdqbudwqbudqwwd.wdqhwqdi.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
     ]
+    const testFiles2: FileArray = [
+        {id: 'wedewomdoiedmed', name: 'Folder1', isDir: true, size: 0, descr: 'Hier steht eine Beschreibungfwekojefwoijfeojefwo', childrenCount: 10},
+        {id: 'wedewomdoiedeedeweddmed', name: 'Datei2.jpg', isDir: false, type: 'MEDIA', ext: '.jpg', color: '#473E7D'},
+        {id: 'tesxhbcdovjewfefrgewfgfe', name: 'Datei4.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {id: 'tesxhbcewfewfewfdovjwfefefe', name: 'Datei5.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {id: 'tesxhbcdovjfewfewfefwefefewffew', name: 'Datei6.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {id: 'tesxhbcdovjefwefefwefefefefefwfewx', name: 'Datei7.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {id: 'tesxhbcdovjiomocmoicmdsiomcidmdismi', name: 'Datei8.to.send.wmv', isDir: false, type: 'MEDIA', ext: '.wmv', hideExt: true},
+        {id: 'tesxhbcdovjcdsodsm,ocmdocmdomcodmcoc', name: 'Datei9.jpg.png', isDir: false, type: 'MEDIA'},
+        {id: 'tesxhbcdovjdlc,ocd,oc,odc,docodmcodmc', name: 'Datei10.jpg', isDir: false, descr: 'Hier steht eine Beschreibungfwekojefwoijfeojefwo', type: 'MEDIA', ext: '.jpg'},
+        {id: 'tesxhbcdovjdps,odcodmcomddsoosddocmckk', name: 'Datei11.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {id: 'tesxhbcdovjdps,odcodmcomddsoosdddwqdocmckk', name: 'Datei12.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {id: 'tesxhbcdovjdps,odcodmcomddsoosdwdqdwdocmckk', name: 'Datei13.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {id: 'tesxhbcdovjdps,odcodmcomddsoosddddddocmckk', name: 'Datei14dqwiuhdwuhquwdhqwdquwuddwubhwdqbudwqbudqwwd.wdqhwqdi.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+    ]
+    const [files, setFiles] = useState(testFiles);
 
     const CustomActions = {
         TrashFiles: defineFileAction({
@@ -59,16 +74,6 @@ const App = () => {
             },
         } as const),
     }
-
-    const customActionTrash = defineFileAction({
-        id: 'trashFiles',
-        __payloadType: {} as { three: string },
-    })
-
-    const customActionReferences = defineFileAction({
-        id: 'trashFiles',
-        __payloadType: {} as { three: string },
-    })
 
     // Define custom types
     type CustomActionUnion = typeof CustomActions.TrashFiles | typeof CustomActions.ShowReferences
@@ -105,7 +110,7 @@ const App = () => {
         ChonkyActions.ClearSelection.id
     ]
 
-    const theme: DeepPartial<ChonkyTheme> = {
+    const theme: ChonkyThemeOverride = {
         dnd: {
             canDropColor: '#69CA90',
             cannotDropColor: '#FF7171',
@@ -134,6 +139,25 @@ const App = () => {
             height: '100%',
             width: '100%',
             zIndex: 11,
+        },
+        overrides: {
+            MuiTooltip: {
+                tooltip: {
+                    fontSize: 16,
+                    fontFamily: 'Helvetica',
+                    textAlign: 'left',
+                    color: 'black',
+                    backgroundColor: 'white',
+                    padding: '5px 10px',
+                    borderRadius: 5,
+                    lineHeight: '1em',
+                    boxShadow: "0 4px 20px rgba(10, 0, 82, 0.1)",
+                },
+                arrow: {
+                    left: '10px !important',
+                    color: 'white',
+                }
+            }
         }
     }
 
@@ -149,7 +173,7 @@ const App = () => {
 
     return (
     <div style={{ height: 400 }}>
-      <FullFileBrowser themeOverride={theme} onFileAction={handleAction} fileActions={fileActionsLibrary} files={testFiles} />
+      <FullFileBrowser themeOverride={theme} onFileAction={handleAction} fileActions={fileActionsLibrary} files={files} />
     </div>
   );
 };
