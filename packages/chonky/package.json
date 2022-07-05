@@ -1,6 +1,6 @@
 {
   "name": "@formcentric/chonky",
-  "version": "2.4.4",
+  "version": "2.4.5",
   "description": "A File Browser component for React",
   "license": "MIT",
   "main": "dist/index.js",

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useContext, useMemo } from 'react';
 
 import { DndEntryState, FileEntryProps } from '../../types/file-list.types';
 import { useLocalizedFileEntryStrings } from '../../util/i18n';
@@ -14,8 +14,7 @@ import {
 } from './FileEntry-hooks';
 import { FileEntryName } from './FileEntryName';
 import { FileEntryState, useCommonEntryStyles } from './GridEntryPreview';
-import {Tooltip} from "@material-ui/core";
-import FileEntryTooltip from "./FileEntryTooltip";
+import FileEntryProperty from "./FileEntryProperty";
 
 interface StyleState {
     entryState: FileEntryState;
@@ -62,27 +61,29 @@ export const ListEntry: React.FC<FileEntryProps> = React.memo(
                         fixedWidth={true}
                     />
                 </div>
-                <FileEntryTooltip className={c([classes.listFileEntryName, 'chonky-listFileEntryName'])} tooltipTitle={file?.name ?? ''}>
-                    <span>
-                        <FileEntryName file={file} />
-                    </span>
-                </FileEntryTooltip>
-                {customFileData && customFileData.map((data) => (
-                    <FileEntryTooltip
+                <FileEntryProperty className={c([classes.listFileEntryName, 'chonky-listFileEntryName'])} tooltipTitle={file?.name ?? ''}>
+                    <FileEntryName file={file}/>
+                </FileEntryProperty>
+                {customFileData && customFileData.map((data, index) => (
+                    <FileEntryProperty
+                        key={`${data.key}-${index}`}
                         className={classes.listFileEntryProperty}
                         tooltipTitle={data.data}
                         style={data?.width ? {flex: `0 1 ${data.width}px`} : {}}
                     >
-                        {data.data ? <span>{data.data}</span> : <span>—</span>}
-                    </FileEntryTooltip>
+                        {data.data}
+                    </FileEntryProperty>
                 ))}
-                <div className={c([classes.listFileEntryProperty, 'chonky-listFileEntryProperty'])}>
+                <FileEntryProperty
+                    className={c([classes.listFileEntryProperty, 'chonky-listFileEntryProperty'])}
+                    tooltipTitle={fileModDateString ?? ''}
+                >
                     {file ? (
-                        fileModDateString ?? <span>—</span>
+                        fileModDateString
                     ) : (
                         <TextPlaceholder minLength={5} maxLength={15} />
                     )}
-                </div>
+                </FileEntryProperty>
                 <div className={c([classes.listFileEntryProperty, 'chonky-listFileEntryProperty'])}>
                     {file ? (
                         fileSizeString ?? <span>—</span>

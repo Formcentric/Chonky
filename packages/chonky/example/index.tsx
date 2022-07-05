@@ -17,19 +17,19 @@ import {
 
 const App = () => {
     const testFiles: FileArray = [
-        {id: 'wedewomdoiedmed', name: 'Folder1efwoijofjofjewojefwojfewojefwojewodeojoejeojewjejojewdej', isDir: true, size: 0, descr: 'Hier steht eine Beschreibungfwekojefwoijfeojefwo', childrenCount: 10},
-        {id: 'wedewomdoiedeedeweddmed', name: 'Datei2.jpg', isDir: false, type: 'MEDIA', ext: '.jpg', color: '#473E7D'},
-        {id: 'tesxhbcdovjewfefrgewfgfe', name: 'Datei4.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
-        {id: 'tesxhbcewfewfewfdovjwfefefe', name: 'Datei5.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
-        {id: 'tesxhbcdovjfewfewfefwefefewffew', name: 'Datei6.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
-        {id: 'tesxhbcdovjefwefefwefefefefefwfewx', name: 'Datei7.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
-        {id: 'tesxhbcdovjiomocmoicmdsiomcidmdismi', name: 'Datei8.to.send.wmv', isDir: false, type: 'MEDIA', ext: '.wmv', hideExt: true},
-        {id: 'tesxhbcdovjcdsodsm,ocmdocmdomcodmcoc', name: 'Datei9.jpg.png', isDir: false, type: 'MEDIA'},
-        {id: 'tesxhbcdovjdlc,ocd,oc,odc,docodmcodmc', name: 'Datei10.jpg', isDir: false, descr: 'Hier steht eine Beschreibungfwekojefwoijfeojefwo', type: 'MEDIA', ext: '.jpg'},
-        {id: 'tesxhbcdovjdps,odcodmcomddsoosddocmckk', name: 'Datei11.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
-        {id: 'tesxhbcdovjdps,odcodmcomddsoosdddwqdocmckk', name: 'Datei12.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
-        {id: 'tesxhbcdovjdps,odcodmcomddsoosdwdqdwdocmckk', name: 'Datei13.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
-        {id: 'tesxhbcdovjdps,odcodmcomddsoosddddddocmckk', name: 'Datei14dqwiuhdwuhquwdhqwdquwuddwubhwdqbudwqbudqwwd.wdqhwqdi.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {modDate: "2022-07-05T09:34:51.575504Z", id: 'wedewomdoiedmed', name: 'Folder1efwoijofjofjewojefwojfewojefwojewodeojoejeojewjejojewdej', isDir: true, size: 0, descr: 'Hier steht eine Beschreibungfwekojefwoijfeojefwo', childrenCount: 10},
+        {modDate: "2022-07-05T09:34:51.575504Z", id: 'wedewomdoiedeedeweddmed', name: 'Datei2.jpg', isDir: false, type: 'MEDIA', ext: '.jpg', color: '#473E7D'},
+        {modDate: "2022-07-05T09:34:51.575504Z", id: 'tesxhbcdovjewfefrgewfgfe', name: 'Datei4.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {modDate: "2022-07-05T09:34:51.575504Z", id: 'tesxhbcewfewfewfdovjwfefefe', name: 'Datei5.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {modDate: "2022-07-05T09:34:51.575504Z", id: 'tesxhbcdovjfewfewfefwefefewffew', name: 'Datei6.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {modDate: "2022-07-05T09:34:51.575504Z", id: 'tesxhbcdovjefwefefwefefefefefwfewx', name: 'Datei7.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {modDate: "2022-07-05T09:34:51.575504Z", id: 'tesxhbcdovjiomocmoicmdsiomcidmdismi', name: 'Datei8.to.send.wmv', isDir: false, type: 'MEDIA', ext: '.wmv', hideExt: true},
+        {modDate: "2022-07-05T09:34:51.575504Z", id: 'tesxhbcdovjcdsodsm,ocmdocmdomcodmcoc', name: 'Datei9.jpg.png', isDir: false, type: 'MEDIA'},
+        {modDate: "2022-07-05T09:34:51.575504Z", id: 'tesxhbcdovjdlc,ocd,oc,odc,docodmcodmc', name: 'Datei10.jpg', isDir: false, descr: 'Hier steht eine Beschreibungfwekojefwoijfeojefwo', type: 'MEDIA', ext: '.jpg'},
+        {modDate: "2022-07-05T09:34:51.575504Z", id: 'tesxhbcdovjdps,odcodmcomddsoosddocmckk', name: 'Datei11.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {modDate: "2022-07-05T09:34:51.575504Z", id: 'tesxhbcdovjdps,odcodmcomddsoosdddwqdocmckk', name: 'Datei12.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {modDate: "2022-07-05T09:34:51.575504Z", id: 'tesxhbcdovjdps,odcodmcomddsoosdwdqdwdocmckk', name: 'Datei13.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
+        {modDate: "2022-07-05T09:34:51.575504Z", id: 'tesxhbcdovjdps,odcodmcomddsoosddddddocmckk', name: 'Datei14dqwiuhdwuhquwdhqwdquwuddwubhwdqbudwqbudqwwd.wdqhwqdi.jpg', isDir: false, type: 'MEDIA', ext: '.jpg'},
     ]
     const testFiles2: FileArray = [
         {id: 'wedewomdoiedmed', name: 'Folder1', isDir: true, size: 0, descr: 'Hier steht eine Beschreibungfwekojefwoijfeojefwo', childrenCount: 10},
