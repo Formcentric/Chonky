@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import React, { ReactElement, useEffect, useMemo } from 'react';
+import React, { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,6 +17,7 @@ import { getI18nId, I18nNamespace } from '../../util/i18n';
 import { important, makeGlobalChonkyStyles } from '../../util/styles';
 import { useContextMenuDismisser } from './FileContextMenu-hooks';
 import { SmartToolbarDropdownButton } from './ToolbarDropdownButton';
+import { ClickAwayListener } from '@material-ui/core';
 
 export interface FileContextMenuProps {}
 
@@ -71,27 +72,33 @@ export const FileContextMenu: React.FC<FileContextMenuProps> = React.memo(() => 
     }, [contextMenuItems, hideContextMenu]);
 
     const anchorPosition = useMemo(
-        () => (contextMenuConfig ? { top: contextMenuConfig.mouseY, left: contextMenuConfig.mouseX } : undefined),
+        () =>
+            contextMenuConfig
+                ? { top: contextMenuConfig.mouseY, left: contextMenuConfig.mouseX }
+                : undefined,
         [contextMenuConfig]
     );
 
     const classes = useStyles();
     return (
-        <Menu
-            elevation={2}
-            disablePortal
-            onClose={hideContextMenu}
-            transitionDuration={150}
-            open={!!contextMenuConfig}
-            anchorPosition={anchorPosition}
-            anchorReference="anchorPosition"
-            classes={{ list: classes.contextMenuList }}
-        >
-            {contextMenuItemComponents}
-            <ListSubheader component="div" className={classes.browserMenuTooltip}>
-                {browserMenuShortcutString}
-            </ListSubheader>
-        </Menu>
+        <ClickAwayListener onClickAway={hideContextMenu}>
+            <Menu
+                elevation={2}
+                disablePortal
+                onClose={hideContextMenu}
+                transitionDuration={150}
+                open={!!contextMenuConfig}
+                anchorPosition={anchorPosition}
+                anchorReference="anchorPosition"
+                classes={{ list: classes.contextMenuList }}
+                PopoverClasses={{ root: classes.root, paper: classes.paper }}
+            >
+                {contextMenuItemComponents}
+                <ListSubheader component="div" className={classes.browserMenuTooltip}>
+                    {browserMenuShortcutString}
+                </ListSubheader>
+            </Menu>
+        </ClickAwayListener>
     );
 });
 
@@ -103,5 +110,11 @@ const useStyles = makeGlobalChonkyStyles(() => ({
     browserMenuTooltip: {
         lineHeight: important('30px'),
         fontSize: important('0.7em'),
+    },
+    root: {
+        pointerEvents: important('none'),
+    },
+    paper: {
+        pointerEvents: important('auto'),
     },
 }));
