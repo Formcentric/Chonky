@@ -1,6 +1,6 @@
 {
-    "name": "@formcentirc/chonky",
-    "version": "2.4.6",
+    "name": "fc-chonky",
+    "version": "2.4.7",
     "description": "A File Browser component for React",
     "license": "MIT",
     "main": "dist/index.js",
@@ -37,14 +37,14 @@
         "useTabs": false,
         "printWidth": 88
     },
-    "module": "dist/chonky.esm.js",
+    "module": "dist/fc-chonky.esm.js",
     "size-limit": [
         {
-            "path": "dist/chonky.cjs.production.min.js",
+            "path": "dist/fc-chonky.cjs.production.min.js",
             "limit": "10 KB"
         },
         {
-            "path": "dist/chonky.esm.js",
+            "path": "dist/fc-chonky.esm.js",
             "limit": "10 KB"
         }
     ],
