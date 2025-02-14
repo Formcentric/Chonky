@@ -1,26 +1,39 @@
 import React, {
-    HTMLProps, useCallback, useContext, useEffect, useMemo, useRef, useState
+    HTMLProps,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Nullable, Undefinable } from 'tsdef';
 
 import { ChonkyActions } from '../../action-definitions/index';
-import {selectThumbnailGenerator, selectors} from '../../redux/selectors';
+import { selectThumbnailGenerator, selectors } from '../../redux/selectors';
 import { thunkRequestFileAction } from '../../redux/thunks/dispatchers.thunks';
 import { DndEntryState } from '../../types/file-list.types';
 import { FileData } from '../../types/file.types';
 import { ChonkyIconName } from '../../types/icons.types';
 import { FileHelper } from '../../util/file-helper';
-import { ChonkyIconContext, ColorsDark, ColorsLight, useIconData } from '../../util/icon-helper';
+import {
+    ChonkyIconContext,
+    ColorsDark,
+    ColorsLight,
+    useIconData,
+} from '../../util/icon-helper';
 import { Logger } from '../../util/logger';
 import { TextPlaceholder } from '../external/TextPlaceholder';
 import { KeyboardClickEvent, MouseClickEvent } from '../internal/ClickableWrapper';
 import { FileEntryState } from './GridEntryPreview';
-import {SmartToolbarButton} from "../external/ToolbarButton";
-import {DefaultActions} from "../../action-definitions/default";
-import {useContextMenuTrigger} from "../external/FileContextMenu-hooks";
+import { SmartToolbarButton } from '../external/ToolbarButton';
+import { DefaultActions } from '../../action-definitions/default';
+import { useContextMenuTrigger } from '../external/FileContextMenu-hooks';
 
-export const useFileEntryHtmlProps = (file: Nullable<FileData>): HTMLProps<HTMLDivElement> => {
+export const useFileEntryHtmlProps = (
+    file: Nullable<FileData>
+): HTMLProps<HTMLDivElement> => {
     return useMemo(() => {
         const dataProps: { [prop: string]: Undefinable<string> } = {
             'data-test-id': 'file-entry',
@@ -34,12 +47,18 @@ export const useFileEntryHtmlProps = (file: Nullable<FileData>): HTMLProps<HTMLD
     }, [file]);
 };
 
-export const useFileEntryState = (file: Nullable<FileData>, selected: boolean, focused: boolean) => {
+export const useFileEntryState = (
+    file: Nullable<FileData>,
+    selected: boolean,
+    focused: boolean
+) => {
     const iconData = useIconData(file);
     const { thumbnailUrl, thumbnailLoading } = useThumbnailUrl(file);
 
     return useMemo<FileEntryState>(() => {
-        const fileColor = thumbnailUrl ? ColorsDark[iconData.colorCode] : ColorsLight[iconData.colorCode];
+        const fileColor = thumbnailUrl
+            ? ColorsDark[iconData.colorCode]
+            : ColorsLight[iconData.colorCode];
         const iconSpin = thumbnailLoading || !file;
         const icon = thumbnailLoading ? ChonkyIconName.loading : iconData.icon;
 
@@ -60,7 +79,9 @@ export const useDndIcon = (dndState: DndEntryState) => {
     let dndIconName: Nullable<ChonkyIconName> = null;
     if (dndState.dndIsOver) {
         const showDropIcon = dndState.dndCanDrop;
-        dndIconName = showDropIcon ? ChonkyIconName.dndCanDrop : ChonkyIconName.dndCannotDrop;
+        dndIconName = showDropIcon
+            ? ChonkyIconName.dndCanDrop
+            : ChonkyIconName.dndCannotDrop;
     } else if (dndState.dndIsDragging) {
         dndIconName = ChonkyIconName.dndDragging;
     }
@@ -78,7 +99,10 @@ export const useModifierIconComponents = (file: Nullable<FileData>) => {
     }, [file]);
     const ChonkyIcon = useContext(ChonkyIconContext);
     const modifierIconComponents = useMemo(
-        () => modifierIcons.map((icon, index) => <ChonkyIcon key={`file-modifier-${index}`} icon={icon} />),
+        () =>
+            modifierIcons.map((icon, index) => (
+                <ChonkyIcon key={`file-modifier-${index}`} icon={icon} />
+            )),
         // For some reason ESLint marks `ChonkyIcon` as an unnecessary dependency,
         // but we expect it can change at runtime so we disable the check.
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -113,29 +137,45 @@ export const useFileNameComponent = (file: Nullable<FileData>) => {
         return (
             <>
                 {name}
-                {extension && !file.hideExt && <span className="chonky-file-entry-description-title-extension">{extension}</span>}
+                {extension && !file.hideExt && (
+                    <span className="chonky-file-entry-description-title-extension">
+                        {extension}
+                    </span>
+                )}
             </>
         );
     }, [file]);
 };
 
 export const useCustomFileDataKeys = (file: Nullable<FileData>) => {
-        if (!file) return null
+    if (!file) return null;
 
-        const customKeys = useSelector(selectors.getDisplayCustomFileData)
-        if (customKeys === null) return null
-        let fileData = customKeys.map(({key, width}) => {
-            return { key, data: file[key], width }
-        })
+    const customKeys = useSelector(selectors.getDisplayCustomFileData);
+    if (customKeys === null) return null;
+    let fileData = customKeys.map(({ key, width }) => {
+        return { key, data: file[key], width };
+    });
 
-        return fileData
-}
+    return fileData;
+};
 
 export const useContextMenuActionButton = (className: string) => {
-    const {open_file_context_menu_btn} = useSelector(selectors.getFileActionMap)
-    const openContextMenu = useContextMenuTrigger()
-    return open_file_context_menu_btn ? <div onClick={openContextMenu} className={className}><SmartToolbarButton fileActionId={DefaultActions.OpenFileContextMenuButton.id}/></div> : null
-}
+    const { open_file_context_menu_btn } = useSelector(selectors.getFileActionMap);
+    const openContextMenu = useContextMenuTrigger();
+    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        event.stopPropagation();
+        openContextMenu(event);
+    };
+
+    return open_file_context_menu_btn ? (
+        <div onClick={handleClick} className={className}>
+            <SmartToolbarButton
+                fileActionId={DefaultActions.OpenFileContextMenuButton.id}
+            />
+        </div>
+    ) : null;
+};
 
 export const useThumbnailUrl = (file: Nullable<FileData>) => {
     const thumbnailGenerator = useSelector(selectThumbnailGenerator);
@@ -164,7 +204,9 @@ export const useThumbnailUrl = (file: Nullable<FileData>) => {
                     })
                     .catch(error => {
                         if (!loadingCancelled) setThumbnailLoading(false);
-                        Logger.error(`User-defined "thumbnailGenerator" handler threw an error: ${error.message}`);
+                        Logger.error(
+                            `User-defined "thumbnailGenerator" handler threw an error: ${error.message}`
+                        );
                     });
             } else if (file.thumbnailUrl) {
                 setThumbnailUrl(file.thumbnailUrl);
@@ -179,7 +221,10 @@ export const useThumbnailUrl = (file: Nullable<FileData>) => {
     return { thumbnailUrl, thumbnailLoading };
 };
 
-export const useFileClickHandlers = (file: Nullable<FileData>, displayIndex: number) => {
+export const useFileClickHandlers = (
+    file: Nullable<FileData>,
+    displayIndex: number
+) => {
     const dispatch = useDispatch();
 
     // Prepare base handlers
@@ -220,8 +265,14 @@ export const useFileClickHandlers = (file: Nullable<FileData>, displayIndex: num
     );
 
     // Prepare single/double click handlers
-    const onSingleClick = useCallback((event: MouseClickEvent) => onMouseClick(event, 'single'), [onMouseClick]);
-    const onDoubleClick = useCallback((event: MouseClickEvent) => onMouseClick(event, 'double'), [onMouseClick]);
+    const onSingleClick = useCallback(
+        (event: MouseClickEvent) => onMouseClick(event, 'single'),
+        [onMouseClick]
+    );
+    const onDoubleClick = useCallback(
+        (event: MouseClickEvent) => onMouseClick(event, 'double'),
+        [onMouseClick]
+    );
 
     return {
         onSingleClick,
